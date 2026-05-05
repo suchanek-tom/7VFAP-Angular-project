@@ -73,3 +73,20 @@ mat-card-content {
 .login-btn mat-progress-spinner {
   margin: auto;
 }
+
+@media (max-width: 480px) {
+  .login-card {
+    box-shadow: none;
+    border-radius: 0;
+    max-width: 100%;
+  }
+
+  .login-container {
+    padding: 0;
+    align-items: flex-start;
+  }
+
+  mat-card-content {
+    padding: 12px 16px 20px;
+  }
+}

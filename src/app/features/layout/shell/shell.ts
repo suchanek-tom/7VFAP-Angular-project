@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, HostListener } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -36,6 +36,16 @@ export class Shell {
   private readonly authService = inject(AuthService);
 
   readonly currentUser = this.authService.currentUser;
+
+  readonly isMobile = signal(window.innerWidth < 768);
+  readonly sidenavOpen = signal(window.innerWidth >= 768);
+
+  @HostListener('window:resize')
+  onResize(): void {
+    const mobile = window.innerWidth < 768;
+    this.isMobile.set(mobile);
+    this.sidenavOpen.set(!mobile);
+  }
 
   readonly navItems: NavItem[] = [
     { label: 'Dashboard', icon: 'dashboard', route: '/dashboard' },

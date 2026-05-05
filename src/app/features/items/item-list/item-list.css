@@ -86,3 +86,28 @@
 mat-paginator {
   border-top: 1px solid var(--mat-sys-outline-variant);
 }
+
+@media (max-width: 767px) {
+  .filter-field {
+    max-width: 100%;
+  }
+
+  /* Hide description and created columns on small screens */
+  .mat-column-description,
+  .mat-column-created_at {
+    display: none;
+  }
+
+  .title-cell {
+    max-width: 160px;
+  }
+
+  .list-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .list-header button {
+    width: 100%;
+  }
+}

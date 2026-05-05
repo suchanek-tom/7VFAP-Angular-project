@@ -76,4 +76,16 @@
   .date-field {
     width: 100%;
   }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+
+  .form-container {
+    max-width: 100%;
+  }
 }

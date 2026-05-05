@@ -64,6 +64,13 @@
   z-index: 100;
 }
 
+.toolbar-title {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .toolbar-spacer {
   flex: 1 1 auto;
 }
@@ -77,4 +84,10 @@
   flex: 1;
   padding: 24px;
   overflow-y: auto;
+}
+
+@media (max-width: 767px) {
+  .content-wrapper {
+    padding: 16px 12px;
+  }
 }
