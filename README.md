@@ -1,59 +1,100 @@
-# SemestralniProjektAngular
+# Semestrální projekt – Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.4.
+Frontendová aplikace vytvořená v rámci semestrálního projektu. Implementuje správu položek s JWT autentizací, chráněnými routami a plnohodnotným CRUD rozhraním postaveným nad lokálním mock API serverem.
 
-## Development server
+## Technologie
 
-To start a local development server, run:
+- **Angular 21** – standalone komponenty, signals, funkcionální interceptory a guards
+- **Angular Material 21** – UI komponenty (Material 3 téma)
+- **Tailwind CSS 4** – utility třídy pro layout
+- **Vitest** – unit testy
 
-```bash
-ng serve
+## Struktura aplikace
+
+```
+src/app/
+├── core/
+│   ├── guards/        # authGuard – ochrana privátních rout
+│   ├── interceptors/  # authInterceptor – přidává Bearer token do HTTP požadavků
+│   ├── models/        # Item, User, LoginRequest, LoginResponse
+│   └── services/      # AuthService, ApiService
+└── features/
+    ├── auth/login/    # Přihlašovací stránka
+    ├── dashboard/     # Přehled se statistikami a záložkami
+    ├── items/
+    │   ├── item-list/ # Tabulka s řazením, vyhledáváním a stránkováním
+    │   └── item-form/ # Formulář pro vytvoření / úpravu položky
+    └── layout/shell/  # Hlavní rozložení – sidenav + toolbar
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Splněné požadavky zadání
 
-## Code scaffolding
+| Požadavek | Implementace |
+|-----------|-------------|
+| Přihlašovací stránka s JWT | `POST /api/login` → token uložen do `localStorage` |
+| Menu + router | Sidenav s `routerLink`, lazy-loaded routes, wildcard přesměrování |
+| Local storage | `auth_token` a `auth_user` klíče v `AuthService` |
+| CRUD API volání | `getItems`, `getItem`, `createItem`, `updateItem`, `deleteItem` |
+| Tabulka (vyhledávání, řazení, stránkování) | `MatTable` + `MatSort` + `MatPaginator` |
+| Datepicker | Pole `created_at` v `ItemForm` |
+| Button | `mat-raised-button`, `mat-icon-button` |
+| Snackbar | Potvrzení a chyby při přihlášení i ukládání položky |
+| Tabs | Dashboard – záložky Přehled, Nedávná aktivita, O aplikaci |
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Přihlašovací údaje (mock)
 
-```bash
-ng generate component component-name
+```
+E-mail:   student@univerzita.cz
+Heslo:    mojetajneheslo
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Spuštění
+
+Nejprve nainstalujte závislosti:
 
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
-
-To build the project run:
+### 1. Spusťte mock API server (port 3000)
 
 ```bash
-ng build
+npm run start:mock
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Dostupné endpointy:
 
-## Running unit tests
+| Metoda | Endpoint | Popis |
+|--------|----------|-------|
+| POST | `/login` | Přihlášení, vrací `{ token }` |
+| GET | `/items` | Seznam všech položek |
+| POST | `/items` | Vytvoření nové položky (201) |
+| GET | `/items/:id` | Detail položky |
+| PUT | `/items/:id` | Aktualizace položky |
+| DELETE | `/items/:id` | Smazání položky (204) |
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### 2. Spusťte Angular dev server (port 4200)
 
 ```bash
-ng test
+npm start
 ```
 
-## Running end-to-end tests
+Otevřete prohlížeč na adrese `http://localhost:4200/`.
 
-For end-to-end (e2e) testing, run:
+Angular dev server automaticky přesměrovává požadavky na `/api/*` na mock server přes proxy konfiguraci v `proxy.conf.json`, čímž se obchází CORS omezení prohlížeče.
+
+## Sestavení produkční verze
 
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Výsledné soubory jsou uloženy ve složce `dist/`.
 
-## Additional Resources
+## Testy
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm test
+```
+
+Testy jsou spouštěny pomocí [Vitest](https://vitest.dev/).
