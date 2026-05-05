@@ -24,9 +24,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.css"
-            ]
+            "styles": ["src/material-theme.scss", "src/styles.css"]
           },
           "configurations": {
             "production": {
@@ -59,7 +57,8 @@
               "buildTarget": "semestralni-projekt-angular:build:production"
             },
             "development": {
-              "buildTarget": "semestralni-projekt-angular:build:development"
+              "buildTarget": "semestralni-projekt-angular:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

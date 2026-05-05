@@ -1,0 +1,80 @@
+<div class="form-container">
+  <div class="form-header">
+    <button mat-icon-button [routerLink]="['/items']" matTooltip="Back to items">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div>
+      <h2 class="page-title">{{ isEditMode() ? 'Edit Item' : 'New Item' }}</h2>
+      <p class="page-subtitle">
+        {{ isEditMode() ? 'Update the item details below.' : 'Fill in the details to create a new item.' }}
+      </p>
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-wrapper">
+      <mat-progress-spinner mode="indeterminate" diameter="48" />
+    </div>
+  } @else {
+
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" novalidate class="item-form">
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" placeholder="Enter item name" />
+            <mat-hint align="end">{{ itemForm.get('name')?.value?.length ?? 0 }}/100</mat-hint>
+            @if (itemForm.get('name')?.invalid && itemForm.get('name')?.touched) {
+              <mat-error>{{ getFieldError('name') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea
+              matInput
+              formControlName="description"
+              rows="4"
+              placeholder="Enter item description"
+            ></textarea>
+            <mat-hint align="end">{{ itemForm.get('description')?.value?.length ?? 0 }}/500</mat-hint>
+            @if (itemForm.get('description')?.invalid && itemForm.get('description')?.touched) {
+              <mat-error>{{ getFieldError('description') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="date-field">
+            <mat-label>Created At</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="created_at" />
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker" />
+            <mat-datepicker #picker />
+            @if (itemForm.get('created_at')?.invalid && itemForm.get('created_at')?.touched) {
+              <mat-error>{{ getFieldError('created_at') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-button type="button" [routerLink]="['/items']">
+              Cancel
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="isSaving()"
+            >
+              @if (isSaving()) {
+                <mat-progress-spinner diameter="20" mode="indeterminate" />
+              } @else {
+                <mat-icon>{{ isEditMode() ? 'save' : 'add' }}</mat-icon>
+              }
+              @if (!isSaving()) { {{ isEditMode() ? 'Update' : 'Create' }} }
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

@@ -1,0 +1,123 @@
+<div class="dashboard">
+  <h1 class="page-title">Dashboard</h1>
+  <p class="page-subtitle">Welcome back, <strong>{{ currentUser()?.email }}</strong>!</p>
+
+  <div class="stats-row">
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <mat-icon class="stat-icon">inventory_2</mat-icon>
+        <div class="stat-info">
+          <span class="stat-label">Total Items</span>
+          @if (isLoading()) {
+            <mat-spinner diameter="24" />
+          } @else {
+            <span class="stat-value">{{ totalItems() }}</span>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <mat-icon class="stat-icon success">schedule</mat-icon>
+        <div class="stat-info">
+          <span class="stat-label">Recent (30 days)</span>
+          @if (isLoading()) {
+            <mat-spinner diameter="24" />
+          } @else {
+            <span class="stat-value">{{ recentItems() }}</span>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <mat-icon class="stat-icon warn">history</mat-icon>
+        <div class="stat-info">
+          <span class="stat-label">Older</span>
+          @if (isLoading()) {
+            <mat-spinner diameter="24" />
+          } @else {
+            <span class="stat-value">{{ olderItems() }}</span>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-tab-group animationDuration="200ms">
+
+    <mat-tab label="Overview">
+      <div class="tab-content">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Quick Actions</mat-card-title>
+            <mat-card-subtitle>Navigate to main sections of the app</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="actions-grid">
+            <button mat-raised-button color="primary" [routerLink]="['/items']">
+              <mat-icon>list</mat-icon>
+              View All Items
+            </button>
+            <button mat-raised-button color="accent" [routerLink]="['/items/new']">
+              <mat-icon>add</mat-icon>
+              Add New Item
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Recent Activity">
+      <div class="tab-content">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Recent Activity</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="activity-item">
+              <mat-icon class="activity-icon add">add_circle</mat-icon>
+              <span>Item #101 created</span>
+              <span class="activity-time">2 hours ago</span>
+            </div>
+            <mat-divider />
+            <div class="activity-item">
+              <mat-icon class="activity-icon edit">edit</mat-icon>
+              <span>Item #98 updated</span>
+              <span class="activity-time">5 hours ago</span>
+            </div>
+            <mat-divider />
+            <div class="activity-item">
+              <mat-icon class="activity-icon delete">delete</mat-icon>
+              <span>Item #45 deleted</span>
+              <span class="activity-time">Yesterday</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="About">
+      <div class="tab-content">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>About This App</mat-card-title>
+            <mat-card-subtitle>Angular semester project</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>This application demonstrates Angular best practices:</p>
+            <ul class="features-list">
+              <li><mat-icon>lock</mat-icon> JWT Authentication with AuthInterceptor</li>
+              <li><mat-icon>shield</mat-icon> Route guards with CanActivate</li>
+              <li><mat-icon>table_chart</mat-icon> MatTable with sorting, filtering &amp; pagination</li>
+              <li><mat-icon>edit_note</mat-icon> Reactive Forms with validation</li>
+              <li><mat-icon>calendar_month</mat-icon> MatDatepicker in CRUD forms</li>
+              <li><mat-icon>tab</mat-icon> MatTabs for content organisation</li>
+            </ul>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
