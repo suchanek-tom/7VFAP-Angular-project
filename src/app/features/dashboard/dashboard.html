@@ -74,25 +74,25 @@
         <mat-card>
           <mat-card-header>
             <mat-card-title>Recent Activity</mat-card-title>
+            <mat-card-subtitle>Last {{ recentActivity().length }} items by date</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <div class="activity-item">
-              <mat-icon class="activity-icon add">add_circle</mat-icon>
-              <span>Item #101 created</span>
-              <span class="activity-time">2 hours ago</span>
-            </div>
-            <mat-divider />
-            <div class="activity-item">
-              <mat-icon class="activity-icon edit">edit</mat-icon>
-              <span>Item #98 updated</span>
-              <span class="activity-time">5 hours ago</span>
-            </div>
-            <mat-divider />
-            <div class="activity-item">
-              <mat-icon class="activity-icon delete">delete</mat-icon>
-              <span>Item #45 deleted</span>
-              <span class="activity-time">Yesterday</span>
-            </div>
+            @if (isLoading()) {
+              <div style="display:flex;justify-content:center;padding:24px">
+                <mat-spinner diameter="36" />
+              </div>
+            } @else if (recentActivity().length === 0) {
+              <p style="text-align:center;color:var(--mat-sys-outline)">No items yet.</p>
+            } @else {
+              @for (item of recentActivity(); track item.id; let last = $last) {
+                <div class="activity-item">
+                  <mat-icon class="activity-icon add">inventory_2</mat-icon>
+                  <span>{{ item.name }}</span>
+                  <span class="activity-time">{{ timeAgo(item.created_at) }}</span>
+                </div>
+                @if (!last) { <mat-divider /> }
+              }
+            }
           </mat-card-content>
         </mat-card>
       </div>

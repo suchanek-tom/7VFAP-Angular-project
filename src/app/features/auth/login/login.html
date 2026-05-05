@@ -13,7 +13,7 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" placeholder="student@univerzita.cz" autocomplete="email" />
+          <input matInput type="email" formControlName="email" placeholder="email*" autocomplete="email" />
           <mat-icon matSuffix>email</mat-icon>
           @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
             <mat-error>{{ getFieldError('email') }}</mat-error>
